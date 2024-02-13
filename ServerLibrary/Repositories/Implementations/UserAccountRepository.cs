@@ -15,7 +15,6 @@ namespace ServerLibrary.Repositories.Implementations
         public async Task<GeneralResponse> CreateAsync(Register user)
         {
             if (user is null) return new GeneralResponse(false, "Model is empty");
-
             var checkUser = await FindUserByEmail(user.Email!);
             if (checkUser != null) return new GeneralResponse(false, "User registred already");
             //save user
@@ -35,9 +34,18 @@ namespace ServerLibrary.Repositories.Implementations
                 return new GeneralResponse(true, "Account Created!");
             }
 
-
-
-//TODO
+            var checkUserRole = await appDbContext.SystemRoles.FirstOrDefaultAsync(_ => _.Name!.Equals(Constants.User));
+            SystemRole response = new();
+            if (checkUserRole is null) 
+            {
+                response = await AddToDatabase(new SystemRole() { Name = Constants.User });
+                await AddToDatabase(new UserRole() { RoleId = response.Id, UserId = applicationUser.Id });
+            }
+            else
+            {
+                await AddToDatabase(new UserRole() { RoleId = checkUserRole.Id, UserId = applicationUser.Id });
+            }
+            return new GeneralResponse(true, "Account Created!");
         }
 
         public Task<LoginResponse> SignInAsync(Login user)
