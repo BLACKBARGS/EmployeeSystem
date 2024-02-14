@@ -122,13 +122,13 @@ namespace ServerLibrary.Repositories.Implementations
 
             var findToken = await appDbContext.RefreshTokenInfos.FirstOrDefaultAsync(_ => _.Token!.Equals(token.Token));
             if (findToken is null) return new LoginResponse(false, "Refresh Token is required");
-
             // Get user details
             var user = await appDbContext.ApplicationUsers.FirstOrDefaultAsync(_ => _.Id == findToken.UserId);
             if (user is null) return new LoginResponse(false, "Refresh Token could not be generated because user not found");
 
             var userRole = await FindUserRole(user.Id);
             var roleName = await FindRoleName(userRole.RoleId);
+
             string jwtToken = GenerateToken(user, roleName.Name!);
             string refreshToken = GenerateRefreshToken();
 
