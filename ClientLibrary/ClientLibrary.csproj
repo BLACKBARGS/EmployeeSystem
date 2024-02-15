@@ -15,8 +15,4 @@
     <ProjectReference Include="..\BaseLibrary\BaseLibrary.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
-
 </Project>
