@@ -12,10 +12,13 @@ namespace ClientLibrary.Helpers
         {
             var stringToken = await localStorageService.GetToken();
             if (string.IsNullOrEmpty(stringToken)) return await Task.FromResult(new AuthenticationState(anonymous));
+
             var deserializeToken = Serializations.DeserializeJsonString<UserSession>(stringToken);
             if (deserializeToken == null) return await Task.FromResult(new AuthenticationState(anonymous));
+
             var getUserClaims = DecryptToken(deserializeToken.Token!);
             if (getUserClaims == null) return await Task.FromResult(new AuthenticationState(anonymous));
+
             var claimsPrincipal = SetClaimPrincipal(getUserClaims);
             return await Task.FromResult(new AuthenticationState(claimsPrincipal));
         }
@@ -53,12 +56,14 @@ namespace ClientLibrary.Helpers
         private static CustomUserClaims DecryptToken(string jwtToken)
         {
             if (string.IsNullOrEmpty(jwtToken)) return new CustomUserClaims();
+
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(jwtToken);
             var userId = token.Claims.FirstOrDefault(_ => _.Type == ClaimTypes.NameIdentifier);
             var name = token.Claims.FirstOrDefault(_ => _.Type == ClaimTypes.Name);
             var email = token.Claims.FirstOrDefault(_ => _.Type == ClaimTypes.Email);
             var role = token.Claims.FirstOrDefault(_ => _.Type == ClaimTypes.Role);
+
             return new CustomUserClaims(userId!.Value!, name!.Value, email!.Value, role!.Value);
         }
     }

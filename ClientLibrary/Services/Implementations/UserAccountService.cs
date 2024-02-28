@@ -2,12 +2,7 @@
 using BaseLibrary.Responses;
 using ClientLibrary.Helpers;
 using ClientLibrary.Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientLibrary.Services.Implementations
 {
@@ -18,16 +13,16 @@ namespace ClientLibrary.Services.Implementations
         {
             var httpClient = getHttpClient.GetPublicHttp();
             var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/register", user);
-            if (!result.IsSuccessStatusCode) return new GeneralResponse(false, "An error occured");
+            if (!result.IsSuccessStatusCode) return new GeneralResponse(false, "An error on registration occured");
 
-            return await result.Content.ReadFromJsonAsync<GeneralResponse>()!;
+            return await result.Content.ReadFromJsonAsync<GeneralResponse>();
         }
 
         public async Task<LoginResponse> SignInAsync(Login user)
         {
             var httpClient = getHttpClient.GetPublicHttp();
             var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/login", user);
-            if (!result.IsSuccessStatusCode) return new LoginResponse(false, "An error occured");
+            if (result.IsSuccessStatusCode) return new LoginResponse(false, "An error on login occured");
 
             return await result.Content.ReadFromJsonAsync<LoginResponse>()!;
         }
