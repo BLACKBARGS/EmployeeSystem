@@ -1,4 +1,7 @@
 ﻿namespace BaseLibrary.Entities
 {
-    public class Town : BaseEntity{}
+    public class Town : BaseEntity
+    {
+
+    }
 }

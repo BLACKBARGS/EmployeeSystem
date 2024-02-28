@@ -2,7 +2,7 @@
 
 namespace ClientLibrary.Helpers
 {
-   
+
     public class LocalStorageService(ILocalStorageService localStorageService)
     {
         private const string StorageKey = "authentication-token";
@@ -11,5 +11,5 @@ namespace ClientLibrary.Helpers
         public async Task RemoveToken() => await localStorageService.RemoveItemAsync(StorageKey);
 
     }
-    
+
 }

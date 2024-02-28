@@ -39,7 +39,7 @@ namespace ServerLibrary.Repositories.Implementations
             }
             var checkUserRole = await appDbContext.SystemRoles.FirstOrDefaultAsync(_ => _.Name!.Equals(Constants.User));
             SystemRole response = new();
-            if (checkUserRole is null) 
+            if (checkUserRole is null)
             {
                 response = await AddToDatabase(new SystemRole() { Name = Constants.User });
                 await AddToDatabase(new UserRole() { RoleId = response.Id, UserId = applicationUser.Id });
