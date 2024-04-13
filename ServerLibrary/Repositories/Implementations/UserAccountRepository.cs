@@ -56,7 +56,7 @@ namespace ServerLibrary.Repositories.Implementations
             if (user is null) return new LoginResponse(false, "Model is empty");
             var applicationUser = await FindUserByEmail(user.Email!);
             if (applicationUser is null) return new LoginResponse(false, "User not found");
-            // Verify Passwod
+            // Verify Password
             if (!BCrypt.Net.BCrypt.Verify(user.Password, applicationUser.Password))
                 return new LoginResponse(false, "Email/Password not valid");
             var getUserRole = await FindUserRole(applicationUser.Id);
@@ -78,7 +78,7 @@ namespace ServerLibrary.Repositories.Implementations
             {
                 await AddToDatabase(new RefreshTokenInfo() { Token = refreshToken, UserId = applicationUser.Id });
             }
-            return new LoginResponse(true, "Token Refresh succesfully", jwtToken, refreshToken);
+            return new LoginResponse(true, "Token Refresh successfully", jwtToken, refreshToken);
         }
 
         private string GenerateToken(ApplicationUser user, string role)
@@ -96,7 +96,7 @@ namespace ServerLibrary.Repositories.Implementations
             issuer: config.Value.Issuer,
             audience: config.Value.Audience,
             claims: userClaims,
-            expires: DateTime.Now.AddDays(1),
+            expires: DateTime.Now.AddDays(2),
             signingCredentials: credentials
             );
             return new JwtSecurityTokenHandler().WriteToken(token);
@@ -135,7 +135,7 @@ namespace ServerLibrary.Repositories.Implementations
 
             updateRefreshToken.Token = refreshToken;
             await appDbContext.SaveChangesAsync();
-            return new LoginResponse(true, "Token Refresh succesfully", jwtToken, refreshToken);
+            return new LoginResponse(true, "Token Refresh successfully", jwtToken, refreshToken);
         }
     }
 }
