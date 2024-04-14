@@ -15,7 +15,7 @@ namespace ClientLibrary.Services.Implementations
             var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/register", user);
             if (!result.IsSuccessStatusCode) return new GeneralResponse(false, "An error on registration occured");
 
-            return await result.Content.ReadFromJsonAsync<GeneralResponse>();
+            return await result.Content.ReadFromJsonAsync<GeneralResponse>()!;
         }
 
         public async Task<LoginResponse> SignInAsync(Login user)
@@ -24,7 +24,7 @@ namespace ClientLibrary.Services.Implementations
             var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/login", user);
             if (!result.IsSuccessStatusCode) return new LoginResponse(false, "An error on login occured");
 
-            return await result.Content.ReadFromJsonAsync<LoginResponse>();
+            return await result.Content.ReadFromJsonAsync<LoginResponse>()!;
         }
 
         public Task<LoginResponse> RefreshTokenAsync(RefreshToken user)
@@ -34,9 +34,9 @@ namespace ClientLibrary.Services.Implementations
 
         public async Task<WeatherForecast[]> GetWeatherForecasts()
         {
-            var httpClient = getHttpClient.GetPublicHttpClient();
+            var httpClient = await getHttpClient.GetPrivacyHttpClient();
             var result = await httpClient.GetFromJsonAsync<WeatherForecast[]>("api/weatherforecast");
             return result!;
         }
     }
-}
+} 
