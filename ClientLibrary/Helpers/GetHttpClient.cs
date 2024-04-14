@@ -5,6 +5,7 @@ namespace ClientLibrary.Helpers
     public class GetHttpClient(IHttpClientFactory httpClientFactory, LocalStorageService localStorageService)
     {
         private const string HeaderKey = "Authorization";
+
         public async Task<HttpClient> GetPrivacyHttpClient()
         {
             var client = httpClientFactory.CreateClient("SystemApiClient");
