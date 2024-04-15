@@ -25,9 +25,13 @@ namespace ClientLibrary.Services.Implementations
             return await result.Content.ReadFromJsonAsync<LoginResponse>() ?? new LoginResponse(false, "Failed to deserialize response");
         }
 
-        public Task<LoginResponse> RefreshTokenAsync(RefreshToken user)
+        public async Task<LoginResponse> RefreshTokenAsync(RefreshToken token)
         {
-            throw new NotImplementedException();
+            var httpClient = getHttpClient.GetPublicHttpClient();
+            var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/refresh-token", token);
+            if (!result.IsSuccessStatusCode) return new LoginResponse(false, "Error occurred");
+            var response = await result.Content.ReadFromJsonAsync<LoginResponse>();
+            return response ?? new LoginResponse(false, "Failed to serialize response");
         }
 
         public async Task<WeatherForecast[]> GetWeatherForecasts()
