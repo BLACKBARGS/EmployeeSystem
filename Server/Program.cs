@@ -18,7 +18,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<JwtSection>(builder.Configuration.GetSection("JwtSection"));
 var jwtSection = builder.Configuration.GetSection(nameof(JwtSection)).Get<JwtSection>();
 
-//Iniciando o banco
+// Start the Db
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ??

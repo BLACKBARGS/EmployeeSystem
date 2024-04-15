@@ -8,6 +8,7 @@ namespace ClientLibrary.Helpers
     public class CustomAuthenticationStateProvider(LocalStorageService localStorageService) : AuthenticationStateProvider
     {
         private readonly ClaimsPrincipal anonymous = new(new ClaimsIdentity());
+
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var stringToken = await localStorageService.GetToken();
@@ -56,14 +57,12 @@ namespace ClientLibrary.Helpers
         private static CustomUserClaims DecryptToken(string jwtToken)
         {
             if (string.IsNullOrEmpty(jwtToken)) return new CustomUserClaims();
-
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(jwtToken);
             var userId = token.Claims.FirstOrDefault(_ => _.Type == ClaimTypes.NameIdentifier);
             var name = token.Claims.FirstOrDefault(_ => _.Type == ClaimTypes.Name);
             var email = token.Claims.FirstOrDefault(_ => _.Type == ClaimTypes.Email);
             var role = token.Claims.FirstOrDefault(_ => _.Type == ClaimTypes.Role);
-
             return new CustomUserClaims(userId!.Value!, name!.Value, email!.Value, role!.Value);
         }
     }

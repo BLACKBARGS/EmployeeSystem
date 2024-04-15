@@ -1,4 +1,4 @@
 ﻿namespace BaseLibrary.Entities
 {
-    public class Branch : BaseEntity { }
+    public class Branch : BaseEntity{}
 }

@@ -1,0 +1,58 @@
+﻿@page "/identity/account/register"
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <EditForm Model="user" OnValidSubmit="HandleRegistration">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="card">
+                    <div class="card-header">Register New Account</div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="fullname" class="form-label">Full Name</label>
+                            <InputText @bind-Value="user.FullName" id="fullname" class="form-control" />
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="email" class="form-label">Email</label>
+                            <InputText @bind-Value="user.Email" id="email" class="form-control" />
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="password" class="form-label">Password</label>
+                            <InputText @bind-Value="user.Password" id="password" type="password" class="form-control" />
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <InputText @bind-Value="user.ConfirmPassword" id="confirmPassword" type="password" class="form-control" />
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <button class="btn btn-primary float-end" type="submit">Register</button>
+                        </div>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    private Register user = new();
+
+    private async Task HandleRegistration()
+    {
+        var result = await accountService.CreateAsync(user);
+        if (result.Flag)
+        {
+            user = new(); // Redirect to login page on successful registration
+        }
+        else
+        {
+            // Handle registration errors, possibly display an error message to the user
+        }
+    }
+}

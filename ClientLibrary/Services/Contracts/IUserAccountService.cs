@@ -10,6 +10,5 @@ namespace ClientLibrary.Services.Contracts
         Task<LoginResponse> SignInAsync(Login user);
         Task<LoginResponse> RefreshTokenAsync(RefreshToken user);
         Task<WeatherForecast[]> GetWeatherForecasts();
-
     }
 }

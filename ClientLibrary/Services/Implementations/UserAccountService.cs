@@ -13,30 +13,32 @@ namespace ClientLibrary.Services.Implementations
         {
             var httpClient = getHttpClient.GetPublicHttpClient();
             var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/register", user);
-            if (!result.IsSuccessStatusCode) return new GeneralResponse(false, "An error on registration occured");
-
-            return await result.Content.ReadFromJsonAsync<GeneralResponse>();
+            if (!result.IsSuccessStatusCode) return new GeneralResponse(false, "An error on registration occurred");
+            return await result.Content.ReadFromJsonAsync<GeneralResponse>() ?? new GeneralResponse(false, "Failed to deserialize response");
         }
 
         public async Task<LoginResponse> SignInAsync(Login user)
         {
             var httpClient = getHttpClient.GetPublicHttpClient();
             var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/login", user);
-            if (!result.IsSuccessStatusCode) return new LoginResponse(false, "An error on login occured");
-
-            return await result.Content.ReadFromJsonAsync<LoginResponse>();
+            if (!result.IsSuccessStatusCode) return new LoginResponse(false, "An error on login occurred");
+            return await result.Content.ReadFromJsonAsync<LoginResponse>() ?? new LoginResponse(false, "Failed to deserialize response");
         }
 
-        public Task<LoginResponse> RefreshTokenAsync(RefreshToken user)
+        public async Task<LoginResponse> RefreshTokenAsync(RefreshToken token)
         {
-            throw new NotImplementedException();
+            var httpClient = getHttpClient.GetPublicHttpClient();
+            var result = await httpClient.PostAsJsonAsync($"{AuthUrl}/refresh-token", token);
+            if (!result.IsSuccessStatusCode) return new LoginResponse(false, "Error occurred");
+            var response = await result.Content.ReadFromJsonAsync<LoginResponse>();
+            return response ?? new LoginResponse(false, "Failed to serialize response");
         }
 
         public async Task<WeatherForecast[]> GetWeatherForecasts()
         {
-            var httpClient = getHttpClient.GetPublicHttpClient();
+            var httpClient = await getHttpClient.GetPrivacyHttpClient();
             var result = await httpClient.GetFromJsonAsync<WeatherForecast[]>("api/weatherforecast");
-            return result!;
+            return result ?? Array.Empty<WeatherForecast>();
         }
     }
 }

@@ -1,4 +1,8 @@
 ﻿@inherits LayoutComponentBase
+@using BaseLibrary.DTOs
+@using ClientLibrary.Helpers
+@inject AuthenticationStateProvider AuthStateProvider
+@using Microsoft.AspNetCore.Components.Authorization
 <div class="page">
     <div class="sidebar">
         <NavMenu />

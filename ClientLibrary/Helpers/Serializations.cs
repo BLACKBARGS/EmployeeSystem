@@ -8,9 +8,9 @@ namespace ClientLibrary.Helpers
             JsonSerializer.Serialize(modelObject);
 
         public static T DeserializeJsonString<T>(string jsonString) =>
-            JsonSerializer.Deserialize<T>(jsonString);
+            JsonSerializer.Deserialize<T>(jsonString)!;
 
         public static IList<T> DeserializeJsonStringList<T>(string jsonString) =>
-            JsonSerializer.Deserialize<IList<T>>(jsonString);
+            JsonSerializer.Deserialize<IList<T>>(jsonString)!;
     }
 }
