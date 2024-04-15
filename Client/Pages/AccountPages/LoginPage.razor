@@ -28,7 +28,7 @@
         <div class="col-lg-5"></div>
     </div>
 </div>
-@code{
+@code {
     Login User = new();
     async Task HandleLogin()
     {
@@ -37,7 +37,7 @@
         {
             var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
             await customAuthStateProvider.UpdateAuthenticationState(new UserSession()
-            { Token = result.Token, RefreshToken = result.RefreshToken });
+                { Token = result.Token, RefreshToken = result.RefreshToken });
             NavManager.NavigateTo("/", forceLoad: true);
         }
     }
