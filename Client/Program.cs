@@ -27,4 +27,3 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStat
 builder.Services.AddScoped<IUserAccountService, UserAccountService>();
 // Registering the custom authentication state provider
 await builder.Build().RunAsync();
-//KKKk

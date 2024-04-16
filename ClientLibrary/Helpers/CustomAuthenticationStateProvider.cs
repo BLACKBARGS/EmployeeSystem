@@ -8,7 +8,7 @@ namespace ClientLibrary.Helpers
     public class CustomAuthenticationStateProvider(LocalStorageService localStorageService) : AuthenticationStateProvider
     {
         private readonly ClaimsPrincipal anonymous = new(new ClaimsIdentity());
-
+        // Inject LocalStorageService
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var stringToken = await localStorageService.GetToken();
@@ -51,7 +51,7 @@ namespace ClientLibrary.Helpers
                     new(ClaimTypes.Name, claims.Name!),
                     new(ClaimTypes.Email, claims.Email!),
                     new(ClaimTypes.Role, claims.Role!),
-                }, "JwtAuth"));
+                },"JwtAuth"));
         }
 
         private static CustomUserClaims DecryptToken(string jwtToken)
