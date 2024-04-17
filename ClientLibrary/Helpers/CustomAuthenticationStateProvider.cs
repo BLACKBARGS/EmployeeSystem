@@ -5,7 +5,7 @@ using System.Security.Claims;
 
 namespace ClientLibrary.Helpers
 {
-    public class CustomAuthenictationStateProvider(LocalStorageService localStorageService) : AuthenticationStateProvider
+    public class CustomAuthenticationStateProvider(LocalStorageService localStorageService) : AuthenticationStateProvider
     {
         private readonly ClaimsPrincipal anonymous = new(new ClaimsIdentity());
         // Inject LocalStorageService

@@ -25,7 +25,7 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<GetHttpClient>();
 builder.Services.AddScoped<LocalStorageService>();
-builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenictationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<IUserAccountService, UserAccountService>();
 // Registering the Syncfusion dialog service
 builder.Services.AddSyncfusionBlazor();

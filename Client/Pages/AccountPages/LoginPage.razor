@@ -1,5 +1,6 @@
 ﻿@page "/identity/account/login"
 @using Client.Pages.OtherPages
+@using ClientLibrary.Helpers
 @using Syncfusion.Blazor.Popups
 @layout AuthenticationLayout
 @inject SfDialogService DialogService
@@ -58,7 +59,7 @@
         if (result.Flag)
         {
             await DisplayDialog(result.Message, "Login Success");
-            var customAuthStateProvider = (CustomAuthenictationStateProvider)AuthStateProvider;
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
             await customAuthStateProvider.UpdateAuthenticationState(new UserSession()
             { Token = result.Token, RefreshToken = result.RefreshToken });
             NavManager.NavigateTo("/", forceLoad: true);
