@@ -2,5 +2,5 @@
 {
     public record GeneralResponse
         (bool Flag,
-            string Message = null!);
+        string Message = null!);
 }

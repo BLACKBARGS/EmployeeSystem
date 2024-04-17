@@ -12,7 +12,7 @@
         public string? TelephoneNumber { get; set; }
         public string? Photo { get; set; }
         public string? Other { get; set; }
-        //Relacao muitos para um
+        // Relationship one to many
         public GeneralDepartment? GeneralDepartment { get; set; }
         public int GeneralDepartmentId { get; set; }
         public Department? Department { get; set; }
