@@ -8,6 +8,7 @@ namespace Server.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
+    [Authorize]
     public class AuthenticationController(IUserAccount accountInterface) : ControllerBase
     {
         [HttpPost("Register")]

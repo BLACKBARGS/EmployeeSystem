@@ -51,7 +51,7 @@ namespace ClientLibrary.Helpers
                     new(ClaimTypes.Name, claims.Name!),
                     new(ClaimTypes.Email, claims.Email!),
                     new(ClaimTypes.Role, claims.Role!),
-                },"JwtAuth"));
+                }, "JwtAuth"));
         }
 
         private static CustomUserClaims DecryptToken(string jwtToken)

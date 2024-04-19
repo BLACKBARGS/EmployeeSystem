@@ -9,10 +9,10 @@ namespace ClientLibrary.Helpers
         protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             // Check if URL is login, register or refresh-token
-            bool loginUrl =request.RequestUri!.AbsoluteUri.Contains("login");
+            bool loginUrl = request.RequestUri!.AbsoluteUri.Contains("login");
             bool registerUrl = request.RequestUri!.AbsoluteUri.Contains("register");
             bool refreshTokenUrl = request.RequestUri!.AbsoluteUri.Contains("refresh-token");
-            if(loginUrl || registerUrl || refreshTokenUrl) return await base.SendAsync(request, cancellationToken);
+            if (loginUrl || registerUrl || refreshTokenUrl) return await base.SendAsync(request, cancellationToken);
             // Check if token is expired
             var result = await base.SendAsync(request, cancellationToken);
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
@@ -23,7 +23,7 @@ namespace ClientLibrary.Helpers
                 // Check if Header contains token
                 string token = string.Empty;
                 try { token = request.Headers.Authorization!.Parameter!; }
-                catch {}
+                catch { }
                 // De serialize token
                 var deserializedToken = Serializations.DeserializeJsonString<UserSession>(stringToken);
                 if (deserializedToken == null) return result;
