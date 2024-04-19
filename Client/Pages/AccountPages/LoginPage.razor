@@ -52,6 +52,13 @@
 @code {
     public bool ShowLoadingButton { get; set; } = false;
     Login User = new();
+    [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        await CheckUserAuthentication();
+    }
+
+
     async Task HandleLogin()
     {
         ShowLoadingButton = true;
@@ -68,10 +75,23 @@
         {
             await DisplayDialog(result.Message, "Alert");
         }
+
         ShowLoadingButton = false;
+
     }
+
+
     private async Task DisplayDialog(string content, string title)
     {
         await DialogService.AlertAsync(content, title);
+    }
+
+
+    private async Task CheckUserAuthentication()
+    {
+        var user = (await AuthenticationState).User;
+        bool isAuthenticated = user.Identity!.IsAuthenticated;
+        if (user.Identity!.IsAuthenticated)
+            NavManager.NavigateTo("/home/dashboard");
     }
 }
