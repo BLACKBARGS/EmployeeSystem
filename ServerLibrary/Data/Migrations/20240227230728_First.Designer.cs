@@ -35,7 +35,7 @@ namespace ServerLibrary.Data.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Fullname")
+                    b.Property<string>("ApplicationFullName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
