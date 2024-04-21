@@ -59,7 +59,6 @@
 @code {
     public bool ShowLoadingButton { get; set; } = false;
     Register User = new();
-
     [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
     protected async override Task OnInitializedAsync()
     {

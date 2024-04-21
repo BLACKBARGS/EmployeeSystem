@@ -17,6 +17,7 @@ namespace ClientLibrary.Services.Implementations
             return await result.Content.ReadFromJsonAsync<GeneralResponse>() ?? new GeneralResponse(false, "Failed to deserialize response"); // If the response is null, return a general response with a message
         }
 
+
         public async Task<LoginResponse> SignInAsync(Login user) // Sign in a user
         {
             var httpClient = getHttpClient.GetPublicHttpClient();
@@ -26,6 +27,7 @@ namespace ClientLibrary.Services.Implementations
             return await result.Content.ReadFromJsonAsync<LoginResponse>() ?? new LoginResponse(false, "Failed to deserialize response");
         }
 
+
         public async Task<LoginResponse> RefreshTokenAsync(RefreshToken token) // Refresh the token
         {
             var httpClient = getHttpClient.GetPublicHttpClient();
@@ -34,6 +36,7 @@ namespace ClientLibrary.Services.Implementations
             var response = await result.Content.ReadFromJsonAsync<LoginResponse>();
             return response ?? new LoginResponse(false, "Failed to serialize response");
         }
+
 
         public async Task<WeatherForecast[]> GetWeatherForecasts() // Get the weather forecast from the server
         {

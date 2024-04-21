@@ -24,6 +24,7 @@ namespace ClientLibrary.Helpers
             return await Task.FromResult(new AuthenticationState(claimsPrincipal));
         }
 
+
         public async Task UpdateAuthenticationState(UserSession userSession)
         {
             var claimsPrincipal = new ClaimsPrincipal();
@@ -41,6 +42,7 @@ namespace ClientLibrary.Helpers
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
         }
 
+
         public static ClaimsPrincipal SetClaimPrincipal(CustomUserClaims claims)
         {
             if (claims.Email is null) return new ClaimsPrincipal();
@@ -53,6 +55,7 @@ namespace ClientLibrary.Helpers
                     new(ClaimTypes.Role, claims.Role!),
                 }, "JwtAuth"));
         }
+
 
         private static CustomUserClaims DecryptToken(string jwtToken)
         {
