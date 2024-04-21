@@ -5,23 +5,23 @@
         <NavMenu />
     </div>
 
-        <main>
-            <div class="top-row px-4">
-                <AuthorizeView>
-                    <Authorized Context="context">
-                        <a class="btn btn-none text-danger" @onclick="LogoutClicked">Logout</a>
-                    </Authorized>
-                </AuthorizeView>
-            </div>
+    <main>
+        <div class="top-row px-4">
+            <AuthorizeView>
+                <Authorized Context="context">
+                    <a class="btn btn-none text-danger" @onclick="LogoutClicked">Logout</a>
+                </Authorized>
+            </AuthorizeView>
+        </div>
 
-            <article class="content px-4">
-           @Body
+        <article class="content px-4">
+            @Body
         </article>
     </main>
 </div>
 <Syncfusion.Blazor.Popups.SfDialogProvider />
-@code{
-    async Task LogoutClicked() 
+@code {
+    async Task LogoutClicked()
     {
         var logoutModel = new UserSession();
         var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
