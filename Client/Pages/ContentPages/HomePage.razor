@@ -3,7 +3,8 @@
 @layout MainLayout
 
 <TableBanner />
-@code {
+@code
+{
     [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
     protected async override Task OnInitializedAsync()
     {
@@ -14,8 +15,8 @@
     private async Task CheckUserAuthentication()
     {
         var user = (await AuthenticationState).User;
-        bool isAuthenticated = user.Identity!.IsAuthenticated;
-        if (!user.Identity!.IsAuthenticated)
+        bool isUserAuthenticated = user.Identity!.IsAuthenticated;
+        if (!isUserAuthenticated)
             NavManager.NavigateTo("/identity/account/login");
     }
 } 

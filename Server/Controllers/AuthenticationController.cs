@@ -9,6 +9,7 @@ namespace Server.Controllers
     [ApiController]
     [AllowAnonymous]
     [Authorize]
+
     public class AuthenticationController(IUserAccount accountInterface) : ControllerBase
     {
         [HttpPost("Register")]
@@ -19,6 +20,7 @@ namespace Server.Controllers
             return Ok(result);
         }
 
+
         [HttpPost("Login")]
         public async Task<IActionResult> SignInAsync(Login user)
         {
@@ -26,6 +28,7 @@ namespace Server.Controllers
             var result = await accountInterface.SignInAsync(user);
             return Ok(result);
         }
+
 
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshTokenAsync(RefreshToken token)
