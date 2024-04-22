@@ -6,7 +6,7 @@
         public bool ShowGeneralDepartment { get; set; }
 
 
-        public void GeneralDepartmentClicked() 
+        public void GeneralDepartmentClicked()
         {
             ResetAllDepartments();
             ShowGeneralDepartment = true;

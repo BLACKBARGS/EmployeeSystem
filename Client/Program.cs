@@ -1,5 +1,6 @@
 using Blazored.LocalStorage;
 using Client;
+using Client.ApplicationStates;
 using ClientLibrary.Helpers;
 using ClientLibrary.Services.Contracts;
 using ClientLibrary.Services.Implementations;
@@ -29,6 +30,10 @@ builder.Services.AddScoped<GetHttpClient>();
 builder.Services.AddScoped<LocalStorageService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<IUserAccountService, UserAccountService>();
+
+builder.Services.AddScoped<DepartmentState>();
+
+
 // Registering the Syncfusion dialog service
 string? syncfusionLicenseKey = Environment.GetEnvironmentVariable("SYNCFUSION_LICENSE_KEY");
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(syncfusionLicenseKey);
