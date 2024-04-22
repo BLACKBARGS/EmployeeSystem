@@ -1,11 +1,12 @@
 ﻿@page "/nav"
 @using Microsoft.AspNetCore.Components.Authorization
+
 <AuthorizeView>
     <Authorized>
         <div class="top-row ps-3 navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="">
-                    Welcome, @context.User.Identity!.Name
+                <a class="navbar-brand mt-5" href="">
+                    Welcome, string
                 </a>
                 <button title="Navigation Menu" class="navbar-toggler" @onclick="ToggleNavMenu">
                     <span class="navbar-toggler-icon"></span>
@@ -17,14 +18,14 @@
             <nav class="flex-column">
                 <div class="nav-item px-3">
                     <NavLink class="nav-link p-2" href="/home/dashboard">
-                        <span class="bi bi-house-door-fill-nav-menu" aria-hidden="false"></span> Home
+                        <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
                     </NavLink>
                 </div>
                 <div class="nav-item px-3">
-                    <NavLink class="nav-link p-2" href="countter">
-                        <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="false"></span> Counter
+                    <NavLink class="nav-link p-2" href="counter">
+                        <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
                     </NavLink>
-                </<div>
+                </div>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link p-2" @onclick="ShowAdminMenuContainer" style="cursor:pointer;" href="javascript:void()">
                         <div class="hstack gap-1">
@@ -40,12 +41,86 @@
                     </a>
                 </div>
                 <div class="nav-item px-3" style="margin-top:@DepartmentMargin">
-              @*TODO*@
-@code{
+                    <NavLink class="nav-link p-2" @onclick="ShowDepartmentContainer" style="cursor:pointer;" href="javascript:void()">
+                        <div class="hstack gap-1">
+                            <span class="bi bi-backpack-fill fs-3 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
+                            <span>Departments</span>
+                        </div>
+                    </NavLink>
+                    <div class="nav-link p-2 text-white" style="margin-left:5rem; visibility:@DepartmentCssStyle">
+                        <ul class="list-group">
+                            <li style="list-style:none" class="cursorStyle">
+                                <a class="nav-link p-2">
+                                    <div class="hstack text-wrap">
+                                        <span class="bi bi-file-medical fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
+                                        <span class="fs-6">General</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li style="list-style:none" class="cursorStyle">
+                                <a class="nav-link p-2">
+                                    <div class="hstack">
+                                        <span class="bi bi-substack fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
+                                        <span>Department</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li style="list-style:none" class="cursorStyle">
+                                <a class="nav-link p-2">
+                                    <div class="hstack">
+                                        <span class="bi bi-chevron-bar-contract fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
+                                        <span>Branch</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </Authorized>
+</AuthorizeView>
+
+@code
+{
+    /*NAO FACO IDEIA DE COMO NAO USAR ESSA LOGICA KKKKKK */
     private bool collapseNavMenu = false;
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
     private void ToggleNavMenu()
     {
         collapseNavMenu = collapseNavMenu;
+    }
+    /*NAO FACO IDEIA DE COMO NAO USAR ESSA LOGICA KKKKKK */
+    public string DepartmentMargin { get; set; } = "-3.5rem";
+    private string CssStyle = "hidden";
+    public bool ShowHide { get; set; } = false;
+
+    private void ShowAdminMenuContainer()
+    {
+        ShowHide = !ShowHide;
+        if (ShowHide)
+        {
+            DepartmentMargin = "0";
+            CssStyle = "visible";
+        }
+        else
+        {
+            DepartmentMargin = "-3.5rem";
+            CssStyle = "hidden";
+        }
+    }
+
+    private string DepartmentCssStyle = "hidden";
+    public bool ShowHideDepartment { get; set; } = false;
+
+    private void ShowDepartmentContainer()
+    {
+        ShowHideDepartment = !ShowHideDepartment;
+        if (ShowHideDepartment)
+            DepartmentCssStyle = "visible";
+        else
+            DepartmentCssStyle = "hidden";
+
     }
 }
