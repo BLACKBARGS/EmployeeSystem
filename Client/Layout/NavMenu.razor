@@ -13,7 +13,6 @@
                 </button>
             </div>
         </div>
-
         <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
             <nav class="flex-column">
                 <div class="nav-item px-3">
@@ -35,7 +34,7 @@
                     </NavLink>
                     <a class="nav-link p-2 text white" style="margin-left:5rem; visibility:@CssStyle">
                         <div class="hstack">
-                            <span class="bi bibi-people fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
+                            <span class="bi bi-people fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
                             <span>Users</span>
                         </div>
                     </a>
@@ -50,7 +49,7 @@
                     <div class="nav-link p-2 text-white" style="margin-left:5rem; visibility:@DepartmentCssStyle">
                         <ul class="list-group">
                             <li style="list-style:none" class="cursorStyle">
-                                <a class="nav-link p-2">
+                                <a class="nav-link p-2" @onclick="GeneralDepartmentClicked">
                                     <div class="hstack text-wrap">
                                         <span class="bi bi-file-medical fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
                                         <span class="fs-6">General</span>
@@ -83,7 +82,7 @@
 
 @code
 {
-    /*NAO FACO IDEIA DE COMO NAO USAR ESSA LOGICA KKKKKK */
+    /*NAO FACO IDEIA DE COMO ESSA LOGICA FUNCIONA, IMPOSSIVEL NAO USAR ESSA LOGICA KKKKKK*/
     private bool collapseNavMenu = false;
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
@@ -91,7 +90,9 @@
     {
         collapseNavMenu = collapseNavMenu;
     }
-    /*NAO FACO IDEIA DE COMO NAO USAR ESSA LOGICA KKKKKK */
+
+
+    /*NAO FACO IDEIA DE COMO ESSA LOGICA FUNCIONA, IMPOSSIVEL NAO USAR ESSA LOGICA KKKKKK*/
     public string DepartmentMargin { get; set; } = "-3.5rem";
     private string CssStyle = "hidden";
     public bool ShowHide { get; set; } = false;
@@ -111,6 +112,7 @@
         }
     }
 
+
     private string DepartmentCssStyle = "hidden";
     public bool ShowHideDepartment { get; set; } = false;
 
@@ -122,5 +124,10 @@
         else
             DepartmentCssStyle = "hidden";
 
+    }
+
+    void GeneralDepartmentClicked()
+    {
+        // NavManager.NavigateTo("/department/general");
     }
 }
