@@ -23,4 +23,16 @@
     <ProjectReference Include="..\ClientLibrary\ClientLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\DepartmentPages\GeneralDepartmentDialog.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\DepartmentPages\GeneralDepartmentDialog.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\DepartmentPages\GeneralDepartmentDialog.razor" />
+  </ItemGroup>
+
 </Project>
