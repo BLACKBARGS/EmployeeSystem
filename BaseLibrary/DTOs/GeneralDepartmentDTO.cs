@@ -1,8 +1,5 @@
 ﻿
 namespace BaseLibrary.DTOs
 {
-    public class GeneralDepartmentDTO : BaseDepartmentDTO
-    {
-
-    }
+    public class GeneralDepartmentDTO : BaseDepartmentDTO{ }
 }
