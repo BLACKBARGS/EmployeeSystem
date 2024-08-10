@@ -17,7 +17,6 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<JwtSection>(builder.Configuration.GetSection("JwtSection"));
 var jwtSection = builder.Configuration.GetSection(nameof(JwtSection)).Get<JwtSection>();
-
 // Start the Db
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -50,13 +49,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowBlazorWasm",
         builder => builder
         .WithOrigins("http://localhost:5245", "https://localhost:7239")
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials());
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials());
 });
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

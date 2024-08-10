@@ -14,7 +14,6 @@
         await CheckUserAuthentication();
     }
 
-
     private async Task CheckUserAuthentication()
     {
         var user = (await AuthenticationState).User;

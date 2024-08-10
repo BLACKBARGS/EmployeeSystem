@@ -12,7 +12,6 @@
             GeneralDepartmentAction?.Invoke();
         }
 
-
         private void ResetAllDepartments()
         {
             ShowGeneralDepartment = false;

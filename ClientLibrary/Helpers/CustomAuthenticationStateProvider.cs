@@ -8,7 +8,7 @@ namespace ClientLibrary.Helpers
     public class CustomAuthenticationStateProvider(LocalStorageService localStorageService) : AuthenticationStateProvider
     {
         private readonly ClaimsPrincipal anonymous = new(new ClaimsIdentity());
-        // Inject LocalStorageService
+
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var stringToken = await localStorageService.GetToken();
@@ -24,10 +24,10 @@ namespace ClientLibrary.Helpers
             return await Task.FromResult(new AuthenticationState(claimsPrincipal));
         }
 
-
         public async Task UpdateAuthenticationState(UserSession userSession)
         {
             var claimsPrincipal = new ClaimsPrincipal();
+
             if (userSession.Token != null || userSession.RefreshToken != null)
             {
                 var serializeSession = Serializations.SerializeObj(userSession);
@@ -42,7 +42,6 @@ namespace ClientLibrary.Helpers
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
         }
 
-
         public static ClaimsPrincipal SetClaimPrincipal(CustomUserClaims claims)
         {
             if (claims.Email is null) return new ClaimsPrincipal();
@@ -55,7 +54,6 @@ namespace ClientLibrary.Helpers
                     new(ClaimTypes.Role, claims.Role!),
                 }, "JwtAuth"));
         }
-
 
         private static CustomUserClaims DecryptToken(string jwtToken)
         {

@@ -65,7 +65,6 @@
         await CheckUserAuthentication();
     }
 
-
     async Task HandleRegistration()
     {
         ShowLoadingButton = true;
@@ -82,12 +81,10 @@
         ShowLoadingButton = false;
     }
 
-
     private async Task DisplayDialog(string content, string title)
     {
         await DialogService.AlertAsync(content, title);
     }
-
 
     private async Task CheckUserAuthentication()
     {
