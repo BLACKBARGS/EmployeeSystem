@@ -35,7 +35,7 @@
                             <span>Administration</span>
                         </div>
                     </NavLink>
-                    <a class="nav-link p-2 text white" style="margin-left:5rem; visibility:@CssStyle">
+                    <a class="nav-link p-2 text white" style="margin-left:1rem; visibility:@CssStyle">
                         <div class="hstack">
                             <span class="bi bi-people fs-5 text-center" aria-hidden="true" style="margin-top:-2rem"></span>
                             <span>Users</span>
@@ -49,7 +49,7 @@
                             <span>Departments</span>
                         </div>
                     </NavLink>
-                    <div class="nav-link p-2 text-white" style="margin-left:5rem; visibility:@DepartmentCssStyle">
+                    <div class="nav-link p-2 text-white" style="margin-left:1rem; visibility:@DepartmentCssStyle">
                         <ul class="list-group">
                             <li style="list-style:none" class="cursorStyle">
                                 <a class="nav-link p-2" @onclick="GeneralDepartmentClicked">
@@ -85,15 +85,13 @@
 
 @code
 {
-    /*NAO FACO IDEIA DE COMO ESSA LOGICA FUNCIONA, IMPOSSIVEL NAO USAR ESSA LOGICA KKKKKK*/
     private bool collapseNavMenu = false;
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {
-        collapseNavMenu = collapseNavMenu;
+        //collapseNavMenu = collapseNavMenu;
     }
-    /*NAO FACO IDEIA DE COMO ESSA LOGICA FUNCIONA, IMPOSSIVEL NAO USAR ESSA LOGICA KKKKKK*/
     
     public string DepartmentMargin { get; set; } = "-3.5rem";
     private string CssStyle = "hidden";
@@ -114,7 +112,6 @@
         }
     }
 
-
     private string DepartmentCssStyle = "hidden";
     public bool ShowHideDepartment { get; set; } = false;
 
@@ -125,9 +122,7 @@
             DepartmentCssStyle = "visible";
         else
             DepartmentCssStyle = "hidden";
-
     }
-
 
     void GeneralDepartmentClicked()
     {
