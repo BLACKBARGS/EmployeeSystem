@@ -1,0 +1,131 @@
+﻿@implements IDisposable
+
+@if (allState.ShowGeneralDepartment)
+{
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="float-start">General Department</h4>
+                        <button class="btn btn-outline-success float-end" @onclick="OpenDialog">
+                            <i class="bi bi-plus-circle-dotted"> </i> Add Department
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">First</th>
+                                    <th scope="col">Last</th>
+                                    <th scope="col">Handle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>mdo</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>fat</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Larry</td>
+                                    <td>the Bird</td>
+                                    <td>twitter</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<GeneralDepartmentDialog @ref="generalDepartmentDialog" HandleSaveOperationEvent="HandleSaveOperationEvent" GeneralDepartment="GeneralDepartment"/>
+@code
+{
+    GeneralDepartmentDialog? generalDepartmentDialog;
+    GeneralDepartment GeneralDepartment = new();
+
+    public string Title { get; set; } = "Add";
+    public List<GeneralDepartment> GeneralDepartments { get; set; } = new();
+
+    protected async override Task OnInitializedAsync()
+    {
+        await GetGeneralDepartments();
+        allState.Action += StateHasChanged;
+    }
+
+    private async Task GetGeneralDepartments()
+    {
+        GeneralDepartments = await generalDepartmentService.GetAll(Constants.GeneralDepartmentBaseUrl);
+    }
+
+    void OpenDialog()
+    {
+        generalDepartmentDialog?.OpenDialog();
+    }
+
+    private async Task HandleSaveOperationEvent(GeneralDepartment generalDepartment)
+    {
+        bool successCheck = false;
+        try
+        {
+            if (generalDepartment.Id > 0)
+            {
+                var result = await generalDepartmentService.Update(generalDepartment, Constants.GeneralDepartmentBaseUrl);
+                successCheck = await DisplayMessage(result.Flag, result.Message);
+            }
+            else
+            {
+                var response = await generalDepartmentService.Insert(generalDepartment, Constants.GeneralDepartmentBaseUrl);
+                successCheck = await DisplayMessage(response.Flag, response.Message);
+            }
+        }
+        catch (Exception ex)
+        {
+            await dialogService.AlertAsync($"An error occurred: {ex.Message}", "Error");
+        }
+
+        if (successCheck)
+        {
+            GeneralDepartment = new();
+            await GetGeneralDepartments();
+            generalDepartmentDialog?.ChangeTitle("Add");
+        }
+    }
+
+    private void EditClicked(GeneralDepartment dep)
+    {
+        generalDepartmentDialog?.ChangeTitle("Update");
+        GeneralDepartment = dep;
+        OpenDialog();
+    }
+
+    private async Task<bool> DisplayMessage(bool flag, string message)
+    {
+        if (flag)
+        {
+            await dialogService.AlertAsync(message, "Success!");
+            return true;
+        }
+        else
+        {
+            await dialogService.AlertAsync(message, "Alert!");
+            return false;
+        }
+    }
+    
+    public void Dispose()
+    {
+        allState.Action -= StateHasChanged;
+    }
+}

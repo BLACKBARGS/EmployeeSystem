@@ -1,13 +1,11 @@
 ﻿@page "/home/dashboard"
-@using Client.Pages.AdministrationPages
-@using Client.Pages.DepartmentPages
-@layout MainLayout
+@*layout MainLayout*@
 
 <TableBanner />
 <GeneralDepartmentPage />
 @code
 {
-    [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
+    [CascadingParameter] public Task<AuthenticationState>? AuthenticationState { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
@@ -16,7 +14,7 @@
 
     private async Task CheckUserAuthentication()
     {
-        var user = (await AuthenticationState).User;
+        var user = (await AuthenticationState!).User;
         bool isUserAuthenticated = user.Identity!.IsAuthenticated;
         if (!isUserAuthenticated)
             NavManager.NavigateTo("/identity/account/login");

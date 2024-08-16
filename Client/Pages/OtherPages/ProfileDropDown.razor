@@ -1,5 +1,5 @@
 ﻿<div class="btn-group">
-    <img src="@(ProfileImage == "" ? "../images/profiles/defaultprofileimage.png" : ProfileImage)" width="45" height="45" style="border-radius:40%; marging-right:3px;" />
+    <img src="@(string.IsNullOrEmpty(ProfileImage) ? "../images/profiles/defaultprofileimage.png" : ProfileImage)" width="45" height="45" style="border-radius:40%; margin-right:3px;" />
     <button type="button" class="btn btn-none border-0 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         <span class="visually-hidden">Toggle Dropdown</span>
     </button>

@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\DepartmentPages\**" />
+    <Content Remove="Pages\DepartmentPages\**" />
+    <EmbeddedResource Remove="Pages\DepartmentPages\**" />
+    <None Remove="Pages\DepartmentPages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.8" />
 	  <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
@@ -21,18 +28,6 @@
   <ItemGroup>
     <ProjectReference Include="..\BaseLibrary\BaseLibrary.csproj" />
     <ProjectReference Include="..\ClientLibrary\ClientLibrary.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\DepartmentPages\GeneralDepartmentDialog.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\DepartmentPages\GeneralDepartmentDialog.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\DepartmentPages\GeneralDepartmentDialog.razor" />
   </ItemGroup>
 
 </Project>

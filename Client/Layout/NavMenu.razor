@@ -1,7 +1,7 @@
 ﻿@page "/nav"
 @using Client.ApplicationStates
 @using Microsoft.AspNetCore.Components.Authorization
-@inject DepartmentState departmentState
+@inject AllState departmentState
 
 <AuthorizeView>
     <Authorized>
@@ -87,16 +87,14 @@
 {
     private bool collapseNavMenu = false;
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
     private void ToggleNavMenu()
     {
-        //collapseNavMenu = collapseNavMenu;
+        // collapseNavMenu = collapseNavMenu;
     }
     
     public string DepartmentMargin { get; set; } = "-3.5rem";
     private string CssStyle = "hidden";
     public bool ShowHide { get; set; } = false;
-
     private void ShowAdminMenuContainer()
     {
         ShowHide = !ShowHide;
@@ -114,7 +112,6 @@
 
     private string DepartmentCssStyle = "hidden";
     public bool ShowHideDepartment { get; set; } = false;
-
     private void ShowDepartmentContainer()
     {
         ShowHideDepartment = !ShowHideDepartment;

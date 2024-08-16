@@ -8,15 +8,9 @@ using System.Collections.Generic;
 
 namespace ServerLibrary.Repositories.Implementations
 {
-    public class GeneralDepartmentRepository : IGenericRepositoryInterface<GeneralDepartment>
+    public class GeneralDepartmentRepository(AppDbContext appDbContext) : IGenericRepositoryInterface<GeneralDepartment>
     {
-        private readonly AppDbContext _appDbContext;
-
-        // Construtor correto
-        public GeneralDepartmentRepository(AppDbContext appDbContext)
-        {
-            _appDbContext = appDbContext;
-        }
+        private readonly AppDbContext _appDbContext = appDbContext;
 
         public async Task<GeneralResponse> DeleteById(int id)
         {
@@ -55,6 +49,7 @@ namespace ServerLibrary.Repositories.Implementations
         {
             var item = await _appDbContext.GeneralDepartments.FirstOrDefaultAsync(x => x.Name!.ToLower() == name.ToLower());
             return item is null;
+
         }
     }
 }
