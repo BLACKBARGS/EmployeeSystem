@@ -3,8 +3,6 @@ using BaseLibrary.Responses;
 using Microsoft.EntityFrameworkCore;
 using ServerLibrary.Data;
 using ServerLibrary.Repositories.Contracts;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace ServerLibrary.Repositories.Implementations
 {
@@ -27,7 +25,9 @@ namespace ServerLibrary.Repositories.Implementations
 
         public async Task<GeneralResponse> Insert(GeneralDepartment item)
         {
-            if (!await CheckName(item.Name!)) return new GeneralResponse(false, "Sorry department already added");
+            var checkIfNull = await CheckName(item.Name);
+            if (!checkIfNull)
+                return new GeneralResponse(false, "Sorry General Department already added");
             _appDbContext.GeneralDepartments.Add(item);
             await Commit();
             return Success();
@@ -38,18 +38,18 @@ namespace ServerLibrary.Repositories.Implementations
             var dep = await _appDbContext.GeneralDepartments.FindAsync(item.Id);
             if (dep is null) return NotFound();
             dep.Name = item.Name;
-            await Commit(); // Adicione o Commit após a atualização
+            await Commit();
             return Success();
         }
 
         private static GeneralResponse NotFound() => new(false, "Sorry department not found");
         private static GeneralResponse Success() => new(true, "Process completed");
         private async Task Commit() => await _appDbContext.SaveChangesAsync();
+
         private async Task<bool> CheckName(string name)
         {
             var item = await _appDbContext.GeneralDepartments.FirstOrDefaultAsync(x => x.Name!.ToLower() == name.ToLower());
             return item is null;
-
         }
     }
 }

@@ -20,6 +20,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.8" PrivateAssets="all" />
     <PackageReference Include="Syncfusion.Blazor.Buttons" Version="26.2.9" />
+    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="26.2.9" />
     <PackageReference Include="Syncfusion.Blazor.Popups" Version="26.2.9" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="26.2.9" />
     <PackageReference Include="Syncfusion.Licensing" Version="26.2.9" />

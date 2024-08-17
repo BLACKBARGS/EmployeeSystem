@@ -7,7 +7,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="float-start">General Department</h4>
+                        <h4 class="float-start">Departments</h4>
                         <button class="btn btn-outline-success float-end" @onclick="OpenDialog">
                             <i class="bi bi-plus-circle-dotted"> </i> Add Department
                         </button>
@@ -19,14 +19,15 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Id</th>
                                     <th scope="col">General Department</th>
+                                    <th scope="col">Department</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (GeneralDepartments != null && GeneralDepartments.Any())
+                                @if (Departments != null && Departments.Any())
                                 {
                                     int count = 1;
-                                    foreach (var item in GeneralDepartments)
+                                    foreach (var item in Departments)
                                     {
                                         <tr>
                                             <th scope="row">@count</th>
@@ -44,7 +45,7 @@
                                 {
                                     <tr>
                                         <td colspan="4">
-                                            <div class="alert alert-info text-center">No General Department added yet!</div>
+                                            <div class="alert alert-info text-center">No Department added yet!</div>
                                         </td>
                                     </tr>
                                 }
@@ -56,7 +57,8 @@
         </div>
     </div>
 }
-<GeneralDepartmentDialog @ref="generalDepartmentDialog" HandleSaveOperationEvent="HandleSaveOperationEvent" GeneralDepartment="GeneralDepartment" />
+<DepartmentDialog @ref="departmentDialog" HandleSaveOperationEvent="HandleSaveOperationEvent" Department="Department" />
+
 
 <style>
     .cursorStyle {
@@ -75,16 +77,27 @@
     }
 </style>
 
-@code {
-    GeneralDepartmentDialog? generalDepartmentDialog;
-    GeneralDepartment GeneralDepartment = new();
-    public string Title { get; set; } = "Add";
-    public List<GeneralDepartment> GeneralDepartments { get; set; } = new();
+<DepartmentDialog @ref="departmentDialog"
+    HandleSaveOperationEvent="HandleSaveOperationEvent"
+    Department="Department"
+    GeneralDepartments="GeneralDepartments" />
 
+@code {
+    public string Title { get; set; } = "Add";
+    DepartmentDialog? departmentDialog;
+    Department Department = new();
+    public List<GeneralDepartment> GeneralDepartments { get; set; } = new();
+    public List<Department> Departments { get; set; } = new();
     protected async override Task OnInitializedAsync()
     {
         await GetGeneralDepartments();
+        await GetDepartments();
         allState.Action += StateHasChanged;
+    }
+
+    private async Task GetDepartments()
+    {
+        Departments = await departmentService.GetAll(Constants.DepartmentBaseUrl);    
     }
 
     private async Task GetGeneralDepartments()
@@ -92,25 +105,31 @@
         GeneralDepartments = await generalDepartmentService.GetAll(Constants.GeneralDepartmentBaseUrl);
     }
 
-    void OpenDialog()
+    void AddButtonClicked()
     {
-        generalDepartmentDialog?.OpenDialog();
+        departmentDialog?.ChangeTitle("Add");
+        Department = new();
+        OpenDialog();
     }
 
-    // Add or Update
-    private async Task HandleSaveOperationEvent(GeneralDepartment generalDepartment)
+    void OpenDialog()
+    {
+        departmentDialog?.OpenDialog();
+    }
+
+    private async Task HandleSaveOperationEvent(Department department)
     {
         bool successCheck = false;
         try
         {
-            if (generalDepartment.Id > 0)
+            if (department.Id > 0)
             {
-                var result = await generalDepartmentService.Update(generalDepartment, Constants.GeneralDepartmentBaseUrl);
+                var result = await departmentService.Update(department, Constants.DepartmentBaseUrl);
                 successCheck = await DisplayMessage(result.Flag, result.Message);
             }
             else
             {
-                var response = await generalDepartmentService.Insert(generalDepartment, Constants.GeneralDepartmentBaseUrl);
+                var response = await departmentService.Insert(department, Constants.DepartmentBaseUrl);
                 successCheck = await DisplayMessage(response.Flag, response.Message);
             }
         }
@@ -121,28 +140,27 @@
 
         if (successCheck)
         {
-            GeneralDepartment = new();
+            Department = new();
             await GetGeneralDepartments();
-            generalDepartmentDialog?.ChangeTitle("Add");
+            departmentDialog?.ChangeTitle("Add");
         }
     }
 
-    // Edit
-    private void EditClicked(GeneralDepartment dep)
+    private void EditClicked(Department dep)
     {
-        generalDepartmentDialog?.ChangeTitle("Update");
-        GeneralDepartment = dep;
+        departmentDialog?.ChangeTitle("Update");
+        Department = dep;
         OpenDialog();
     }
 
     // Delete
-    private async Task DeleteClicked(GeneralDepartment dep)
+    private async Task DeleteClicked(Department dep)
     {
         bool confirm = await dialogService.ConfirmAsync($"Are you sure you want to delete? {dep.Name}", "Confirm Delete");
         if (!confirm) return;
-        var response = await generalDepartmentService.DeleteById(dep.Id, Constants.GeneralDepartmentBaseUrl);
+        var response = await departmentService.DeleteById(dep.Id, Constants.DepartmentBaseUrl);
         if (await DisplayMessage(response.Flag, response.Message))
-            await GetGeneralDepartments();
+            await GetDepartments();
     }
 
     // Messages
@@ -162,7 +180,7 @@
 
     private string GetTableContainerClass()
     {
-        return GeneralDepartments != null && GeneralDepartments.Count > 10 ? "table-container-scroll" : "table-container";
+        return Departments != null && Departments.Count > 10 ? "table-container-scroll" : "table-container";
     }
 
     // Action state
@@ -170,4 +188,5 @@
     {
         allState.Action -= StateHasChanged;
     }
+}
 }
