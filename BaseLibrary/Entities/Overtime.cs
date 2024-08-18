@@ -14,5 +14,3 @@ namespace BaseLibrary.Entities
         public int OvertimeTypeId { get; set; }
     }
 }
-
-// https://youtu.be/yRnI5tnbcGk?list=PL285LgYq_FoKoxiqmUEgVX3_wFf1ioi3J&t=2181

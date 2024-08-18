@@ -1,6 +1,6 @@
 ﻿@implements IDisposable
 
-@if (allState.ShowGeneralDepartment)
+@if (allState.ShowDepartment)
 {
     <div class="container mt-5">
         <div class="row">
@@ -24,7 +24,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (Departments != null && Departments.Any())
+                                @if (Departments is not null)
                                 {
                                     int count = 1;
                                     foreach (var item in Departments)
@@ -32,6 +32,7 @@
                                         <tr>
                                             <th scope="row">@count</th>
                                             <td>@item.Id</td>
+                                            <td>@item.GeneralDepartment!.Name</td>
                                             <td>@item.Name</td>
                                             <td>
                                                 <i class="bi bi-pencil text-info me-3 cursorStyle" @onclick="() => EditClicked(item)"></i>
@@ -57,8 +58,6 @@
         </div>
     </div>
 }
-<DepartmentDialog @ref="departmentDialog" HandleSaveOperationEvent="HandleSaveOperationEvent" Department="Department" />
-
 
 <style>
     .cursorStyle {
@@ -77,10 +76,7 @@
     }
 </style>
 
-<DepartmentDialog @ref="departmentDialog"
-    HandleSaveOperationEvent="HandleSaveOperationEvent"
-    Department="Department"
-    GeneralDepartments="GeneralDepartments" />
+<DepartmentDialog @ref="departmentDialog" HandleSaveOperationEvent="HandleSaveOperationEvent" Department="Department" GeneralDepartments="GeneralDepartments" />
 
 @code {
     public string Title { get; set; } = "Add";
@@ -188,5 +184,4 @@
     {
         allState.Action -= StateHasChanged;
     }
-}
 }

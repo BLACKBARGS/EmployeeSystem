@@ -21,14 +21,14 @@
                             string selected = Department.GeneralDepartment!.Name;
                             <label class="form-label">Select General Department</label>
                             <SfDropDownList TValue="string" TItem="GeneralDepartment" Placeholder="@selected" DataSource="GeneralDepartments">
-                                <DropDownFieldSettings Value="Id" Text="Name"></DropDownFieldSettings>
+                                <DropDownListFieldSettings Value="Id" Text="Name"></DropDownListFieldSettings>
                                 <DropDownListEvents TValue="string" TItem="GeneralDepartment" ValueChange="OnValueChange"></DropDownListEvents>
                             </SfDropDownList>
                         }
                         else
                         {
                             <SfDropDownList TValue="string" TItem="GeneralDepartment" Placeholder="Select General Department" DataSource="GeneralDepartments">
-                                <DropDownFieldSettings Value="Id" Text="Name"></DropDownFieldSettings>
+                                <DropDownListFieldSettings Value="Id" Text="Name"></DropDownListFieldSettings>
                                 <DropDownListEvents TValue="string" TItem="GeneralDepartment" ValueChange="OnValueChange"></DropDownListEvents>
                             </SfDropDownList>
                         }
@@ -43,7 +43,8 @@
     </DialogButtons>
 </SfDialog>
 
-@code {
+@code
+{
     [Parameter] public Department Department { get; set; } = new Department();
     [Parameter] public List<GeneralDepartment> GeneralDepartments { get; set; } = new List<GeneralDepartment>();
     [Parameter] public EventCallback<Department> HandleSaveOperationEvent { get; set; }
@@ -85,5 +86,4 @@
     {
         Department.GeneralDepartmentId = int.Parse(args.Value);
     }
-
 }
