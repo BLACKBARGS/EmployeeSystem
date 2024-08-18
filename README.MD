@@ -1,62 +1,98 @@
-# Branch Management System
+Ôªø# üè¢ Employee System
 
-Este projeto È um sistema de gerenciamento de filiais desenvolvido utilizando v·rias tecnologias modernas. Ele permite que os usu·rios visualizem, adicionem, editem e excluam filiais associadas a departamentos.
+Este projeto √© um sistema de gerenciamento de filiais desenvolvido utilizando tecnologias modernas. Ele permite que os usu√°rios visualizem, adicionem, editem e excluam filiais associadas a departamentos.
 
-## Tecnologias Utilizadas
+## üöÄ Tecnologias Utilizadas
 
 ### Frontend
 
-- **Blazor WebAssembly**: Utilizado para construir a interface do usu·rio interativa e responsiva.
-- **Razor Components**: Para criar componentes reutiliz·veis e modulares.
-- **Bootstrap**: Para estilizaÁ„o e layout responsivo.
-- **Blazored.LocalStorage**: Para armazenamento local no navegador.
-- **Syncfusion Blazor**: Para componentes adicionais de UI, como di·logos e pop-ups.
+- **Blazor WebAssembly**: Interface do usu√°rio interativa e responsiva.
+- **Razor Components**: Componentes reutiliz√°veis e modulares.
+- **Bootstrap**: Estiliza√ß√£o e layout responsivo.
+- **Blazored.LocalStorage**: Armazenamento local no navegador.
+- **Syncfusion Blazor**: Componentes adicionais de UI, como di√°logos e pop-ups.
 
 ### Backend
 
-- **ASP.NET Core**: Para construir a API RESTful que serve os dados para o frontend.
-- **Entity Framework Core**: Para acesso e manipulaÁ„o de dados no banco de dados.
-- **Microsoft SQL Server**: Banco de dados relacional utilizado para armazenar os dados da aplicaÁ„o.
+- **ASP.NET Core**: API RESTful que serve os dados para o frontend.
+- **Entity Framework Core**: Acesso e manipula√ß√£o de dados no banco de dados.
+- **Microsoft SQL Server**: Banco de dados relacional utilizado para armazenar os dados da aplica√ß√£o.
 
-### SeguranÁa
+### Seguran√ßa
 
-- **JWT (JSON Web Tokens)**: Para autenticaÁ„o e autorizaÁ„o de usu·rios.
-- **BCrypt**: Para hashing de senhas.
+- **JWT (JSON Web Tokens)**: Autentica√ß√£o e autoriza√ß√£o de usu√°rios.
+- **BCrypt**: Hashing de senhas.
 
-## Estrutura do Projeto
+## üóÇÔ∏è Estrutura do Projeto
 
 ### Client
 
-- **Pages/ContentPages/DepartmentPages/BranchPage.razor**: P·gina principal para gerenciamento de filiais.
-- **Services**: ServiÁos para comunicaÁ„o com a API backend.
-- **Components**: Componentes reutiliz·veis, como di·logos e formul·rios.
+- **Pages/ContentPages/DepartmentPages/BranchPage.razor**: P√°gina principal para gerenciamento de filiais.
+- **Services**: Servi√ßos para comunica√ß√£o com a API backend.
+- **Components**: Componentes reutiliz√°veis, como di√°logos e formul√°rios.
 
 ### Server
 
-- **Controllers**: Controladores da API para gerenciar requisiÁıes HTTP.
-- **Repositories**: ImplementaÁıes de repositÛrios para acesso a dados.
-- **Data**: ConfiguraÁıes de contexto do banco de dados e migraÁıes.
+- **Controllers**: Controladores da API para gerenciar requisi√ß√µes HTTP.
+- **Repositories**: Implementa√ß√µes de reposit√≥rios para acesso a dados.
+- **Data**: Configura√ß√µes de contexto do banco de dados e migra√ß√µes.
 
 ### Shared
 
 - **Models**: Modelos de dados compartilhados entre o cliente e o servidor.
-- **DTOs**: Objetos de transferÍncia de dados para comunicaÁ„o entre camadas.
+- **DTOs**: Objetos de transfer√™ncia de dados para comunica√ß√£o entre camadas.
 
-## Funcionalidades
+## ‚ú® Funcionalidades
 
-- **VisualizaÁ„o de Filiais**: Exibe uma lista de filiais associadas a departamentos.
-- **AdiÁ„o de Filiais**: Permite adicionar novas filiais.
-- **EdiÁ„o de Filiais**: Permite editar informaÁıes de filiais existentes.
-- **Exclus„o de Filiais**: Permite excluir filiais.
-- **AutenticaÁ„o e AutorizaÁ„o**: Utiliza JWT para autenticar e autorizar usu·rios.
+- **Visualiza√ß√£o de Filiais**: Exibe uma lista de filiais associadas a departamentos.
+- **Adi√ß√£o de Filiais**: Permite adicionar novas filiais.
+- **Edi√ß√£o de Filiais**: Permite editar informa√ß√µes de filiais existentes.
+- **Exclus√£o de Filiais**: Permite excluir filiais.
+- **Autentica√ß√£o e Autoriza√ß√£o**: Utiliza JWT para autenticar e autorizar usu√°rios.
 
-## Como Executar o Projeto
+## üõ†Ô∏è Como Executar o Projeto
 
-### PrÈ-requisitos
+### Pr√©-requisitos
 
-- .NET 6 OU 8 SDK
+- .NET 6 ou 8 SDK
 - Node.js (para gerenciamento de pacotes)
 - SQL Server
 
+### Passos
+
+1. Clone o reposit√≥rio:
+
+   ```bash
+   git clone https://github.com/seu-usuario/seu-repositorio.git
+   cd seu-repositorio
+
+2. Restaure os pacotes NuGet
+	```bash
+	dotnet restore
+
+3. Configure a string de conex√£o com o banco de dados no arquivo `appsettings.json`.
+
+4. Execute as migra√ß√µes para criar o banco de dados:
+
+   ```bash
+   dotnet ef database update
+
+5. Inicie o servidor:
+
+   ```bash
+   dotnet run --project Server
+
+6. Execute o cliente:
+
+   ```bash
+   cd Client
+   dotnet run
 
 
+## Contribui√ß√£o
+
+Contribui√ß√µes s√£o bem-vindas! Sinta-se √† vontade para abrir issues e pull requests.
+
+## Licen√ßa
+
+Este projeto est√° licenciado sob a licen√ßa MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
