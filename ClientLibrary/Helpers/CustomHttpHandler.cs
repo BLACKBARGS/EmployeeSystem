@@ -12,14 +12,13 @@ namespace ClientLibrary.Helpers
             bool loginUrl = request.RequestUri!.AbsoluteUri.Contains("login");
             bool registerUrl = request.RequestUri!.AbsoluteUri.Contains("register");
             bool refreshTokenUrl = request.RequestUri!.AbsoluteUri.Contains("refresh-token");
+
             if (loginUrl || registerUrl || refreshTokenUrl) return await base.SendAsync(request, cancellationToken);
 
             var result = await base.SendAsync(request, cancellationToken);
-
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 var stringToken = await localStorageService.GetToken();
-
                 if (stringToken == null) return result;
                 string token = string.Empty;
                 try { token = request.Headers.Authorization!.Parameter!; }

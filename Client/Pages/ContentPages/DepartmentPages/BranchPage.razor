@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="float-start">Branches</h4>
-                        <button class="btn btn-outline-success float-end" @onclick="OpenDialog">
+                        <button class="btn btn-outline-success float-end" @onclick="AddButtonClicked">
                             <i class="bi bi-plus-circle-dotted"> </i> Add Branch
                         </button>
                     </div>
@@ -23,7 +23,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (Branches is not null)
+                                @if (Branches is not null && Branches.Any())
                                 {
                                     int count = 1;
                                     foreach (var item in Branches)
@@ -31,7 +31,7 @@
                                         <tr>
                                             <th scope="row">@count</th>
                                             <td>@item.Id</td>
-                                            <td>@item.Department!.Name</td>
+                                            <td>@item.Department?.Name</td>
                                             <td>@item.Name</td>
                                             <td>
                                                 <i class="bi bi-pencil text-info me-3 cursorStyle" @onclick="() => EditClicked(item)"></i>
@@ -44,8 +44,8 @@
                                 else
                                 {
                                     <tr>
-                                        <td colspan="4">
-                                            <div class="alert alert-info text-center">No Department added yet!</div>
+                                        <td colspan="5">
+                                            <div class="alert alert-info text-center">No Branches added yet!</div>
                                         </td>
                                     </tr>
                                 }
@@ -83,6 +83,7 @@
     Branch Branch = new();
     public List<Department> Departments { get; set; } = new();
     public List<Branch> Branches { get; set; } = new();
+
     protected async override Task OnInitializedAsync()
     {
         await GetBranches();
@@ -131,6 +132,8 @@
         catch (Exception ex)
         {
             await dialogService.AlertAsync($"An error occurred: {ex.Message}", "Error");
+            Console.WriteLine($"Error: {ex.Message}");
+            Console.WriteLine($"Stack Trace: {ex.StackTrace}");
         }
         if (successCheck)
         {

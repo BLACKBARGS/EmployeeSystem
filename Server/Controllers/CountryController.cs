@@ -7,7 +7,5 @@ namespace Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CountryController(IGenericRepositoryInterface<Country> genericRepositoryInterface) : GenericController<Country>(genericRepositoryInterface)
-    {
-    }
+    public class CountryController(IGenericRepositoryInterface<Country> genericRepositoryInterface) : GenericController<Country>(genericRepositoryInterface) { }
 }

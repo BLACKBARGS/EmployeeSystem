@@ -45,7 +45,6 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddScoped<IUserAccount, UserAccountRepository>();
-
 builder.Services.AddScoped<IGenericRepositoryInterface<GeneralDepartment>, GeneralDepartmentRepository>();
 builder.Services.AddScoped<IGenericRepositoryInterface<Department>, DepartmentRepository>();
 builder.Services.AddScoped<IGenericRepositoryInterface<Branch>, BranchRepository>();

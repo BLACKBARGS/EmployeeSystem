@@ -1,6 +1,8 @@
 ﻿using BaseLibrary.Entities;
 using BaseLibrary.Responses;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ServerLibrary.Data;
 using ServerLibrary.Repositories.Contracts;
 
@@ -12,17 +14,17 @@ namespace ServerLibrary.Repositories.Implementations
         {
             var dep = await appDbContext.Branches.FindAsync(id);
             if (dep is null) return NotFound();
+
             appDbContext.Branches.Remove(dep);
             await Commit();
             return Success();
         }
 
-        public async Task<List<Branch>> GetAll() => await appDbContext.Branches.AsNoTracking().Include(d=>d.Department).ToListAsync();
+        public async Task<List<Branch>> GetAll() => await appDbContext.Branches.AsNoTracking().Include(d => d.Department).ToListAsync();
         public async Task<Branch> GetById(int id) => await appDbContext.Branches.FindAsync(id);
-
         public async Task<GeneralResponse> Insert(Branch item)
         {
-            if (!await CheckName(item.Name!)) return new GeneralResponse(false, "Department already added");
+            if (!await CheckName(item.Name!)) return new GeneralResponse(false, "Branch already added");
             appDbContext.Branches.Add(item);
             await Commit();
             return Success();
@@ -39,8 +41,9 @@ namespace ServerLibrary.Repositories.Implementations
         }
 
         private async Task Commit() => await appDbContext.SaveChangesAsync();
-        private static GeneralResponse NotFound() => new(false, "Department not found");
+        private static GeneralResponse NotFound() => new(false, "Sorry, branch not found");
         private static GeneralResponse Success() => new(true, "Process completed");
+
         private async Task<bool> CheckName(string name)
         {
             var item = await appDbContext.Branches.FirstOrDefaultAsync(x => x.Name!.ToLower().Equals(name.ToLower()));
