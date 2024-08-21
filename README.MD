@@ -78,21 +78,13 @@ Este projeto é um sistema de gerenciamento de filiais desenvolvido utilizando t
    dotnet ef database update
 
 5. Inicie o servidor:
-
    ```bash
    dotnet run --project Server
 
 6. Execute o cliente:
-
    ```bash
    cd Client
-   dotnet run
-
+   dotnet run --project Client
 
 ## Contribuição
-
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
-
-## Licença
-
-Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
