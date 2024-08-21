@@ -1,13 +1,18 @@
 ﻿using BaseLibrary.DTOs;
+using BaseLibrary.Entities;
 using BaseLibrary.Responses;
 
 
 namespace ServerLibrary.Repositories.Contracts
 {
-    public interface IUserAccount // Interface for the UserAccount
+    public interface IUserAccount
     {
-        Task<GeneralResponse> CreateAsync(Register user); // Create a new user
-        Task<LoginResponse> SignInAsync(Login user); // Sign in a user
-        Task<LoginResponse> RefreshTokenAsync(RefreshToken token); // Refresh the token
+        Task<GeneralResponse> CreateAsync(Register user);
+        Task<LoginResponse> SignInAsync(Login user);
+        Task<LoginResponse> RefreshTokenAsync(RefreshToken token);
+        Task<List<ManageUser>> GetUsers();
+        Task<GeneralResponse> UpdateUser(ManageUser user);
+        Task<List<SystemRole>> GetRoles();
+        Task<GeneralResponse> DeleteUser(int id);
     }
 }

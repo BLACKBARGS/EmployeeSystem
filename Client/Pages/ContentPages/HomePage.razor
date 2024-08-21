@@ -1,14 +1,18 @@
 ﻿@page "/home/dashboard"
-@*layout MainLayout*@
 
-<TableBanner />
-<GeneralDepartmentPage />
+<TableBanner/>
+<UserPage />
+<GeneralDepartmentPage/>
 <DepartmentPage />
-<BranchPage />
+<BranchPage/>
+<CountryPage/>
+<CityPage/>
+<TownPage/>
+<UserPage/>
+
 @code
 {
     [CascadingParameter] public Task<AuthenticationState>? AuthenticationState { get; set; }
-
     protected async override Task OnInitializedAsync()
     {
         await CheckUserAuthentication();

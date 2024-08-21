@@ -15,19 +15,14 @@ using Constants = ServerLibrary.Helpers.Constants;
 
 namespace ServerLibrary.Repositories.Implementations
 {
-    public class UserAccountRepository : IUserAccount
+    public class UserAccountRepository(IOptions<JwtSection> config, AppDbContext appDbContext) : IUserAccount
     {
         private static string GenerateRefreshToken() => Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
         private async Task<UserRole?> FindUserRole(int userId) => await _appDbContext.UserRoles.FirstOrDefaultAsync(_ => _.UserId == userId);
         private async Task<SystemRole?> FindRoleName(int roleId) => await _appDbContext.SystemRoles.FirstOrDefaultAsync(_ => _.Id == roleId);
         private async Task<ApplicationUser?> FindUserByEmail(string email) => await _appDbContext.ApplicationUsers.FirstOrDefaultAsync(_ => _.Email!.ToLower()!.Equals(email!.ToLower()));
-        private readonly IOptions<JwtSection> _config;
-        private readonly AppDbContext _appDbContext;
-        public UserAccountRepository(IOptions<JwtSection> config, AppDbContext appDbContext)
-        {
-            _config = config;
-            _appDbContext = appDbContext;
-        }
+        private readonly IOptions<JwtSection> _config = config;
+        private readonly AppDbContext _appDbContext = appDbContext;
 
         public async Task<GeneralResponse> CreateAsync(Register user)
         {
@@ -133,5 +128,46 @@ namespace ServerLibrary.Repositories.Implementations
             await _appDbContext.SaveChangesAsync();
             return new LoginResponse(true, "Token Refresh successfully", jwtToken, refreshToken);
         }
+
+        public async Task<List<ManageUser>> GetUsers()
+        {
+            var allUsers = await GetAplicationUsers();
+            var allUserRoles = await UserRoles();
+            var allRoles = await SystemRoles();
+
+            if (allUsers.Count == 0 || allRoles.Count == 0) return null!;
+
+            var users = new List<ManageUser>();
+            foreach (var user in allUsers)
+            {
+                var userRole = allUserRoles.FirstOrDefault(u => u.UserId == user.Id);
+                var roleName = allRoles.FirstOrDefault(u => u.Id == userRole!.RoleId);
+                users.Add(new ManageUser() { UserId = user.Id, Name = user.Fullname, Email = user.Email!, Role = roleName!.Name! });
+            }
+            return users;
+        }
+
+        public async Task<GeneralResponse> UpdateUser(ManageUser user)
+        {
+            var getRole = (await SystemRoles()).FirstOrDefault(r => r.Name!.Equals(user.Role));
+            var userRole = await _appDbContext.UserRoles.FirstOrDefaultAsync(u => u.UserId == user.UserId);
+            userRole!.RoleId = getRole!.Id;
+            await _appDbContext.SaveChangesAsync();
+            return new GeneralResponse(true, "User Role Updated");
+        }
+
+        public async Task<List<SystemRole>> GetRoles() => await SystemRoles();
+
+        public async Task<GeneralResponse> DeleteUser(int id)
+        {
+            var user = await _appDbContext.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == id);
+            _appDbContext.ApplicationUsers.Remove(user!);
+            await _appDbContext.SaveChangesAsync();
+            return new GeneralResponse(true, "User successfully deleted!");
+        }
+
+        private async Task<List<SystemRole>> SystemRoles() => await _appDbContext.SystemRoles.AsNoTracking().ToListAsync();
+        private async Task<List<UserRole>> UserRoles() => await _appDbContext.UserRoles.AsNoTracking().ToListAsync();
+        private async Task<List<ApplicationUser>> GetAplicationUsers() => await _appDbContext.ApplicationUsers.AsNoTracking().ToListAsync();
     }
 }
