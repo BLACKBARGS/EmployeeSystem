@@ -223,6 +223,7 @@ namespace ServerLibrary.Data.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Punishment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SanctionTypeId = table.Column<int>(type: "int", nullable: false),
+                    PunishmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CivilId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FileNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Other = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -288,8 +289,7 @@ namespace ServerLibrary.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GeneralDepartmentId = table.Column<int>(type: "int", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: true),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -299,11 +299,6 @@ namespace ServerLibrary.Data.Migrations
                         name: "FK_Branches_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Branches_GeneralDepartments_GeneralDepartmentId",
-                        column: x => x.GeneralDepartmentId,
-                        principalTable: "GeneralDepartments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -347,11 +342,6 @@ namespace ServerLibrary.Data.Migrations
                 name: "IX_Branches_DepartmentId",
                 table: "Branches",
                 column: "DepartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Branches_GeneralDepartmentId",
-                table: "Branches",
-                column: "GeneralDepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cities_CountryId",
