@@ -66,4 +66,4 @@ A robust system for managing branch offices and departments, developed using mod
 Contributions are welcome! Feel free to open issues and pull requests.
 
 ## 📜 License
-This project is licensed under the [MIT License](LICENSE.txt).
+This project is licensed under the [MIT License](LICENSE).
